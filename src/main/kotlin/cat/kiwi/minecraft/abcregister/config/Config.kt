@@ -14,6 +14,8 @@ object Config {
     lateinit var etcdEndpoints: ArrayList<URI>
     var debug = false
     var deleteAfterGrant = false
+    var loopRegister = true
+    var loopRegisterInterval = 60000L
 
     @Throws(IOException::class)
     fun makeConfig() {
@@ -52,6 +54,8 @@ object Config {
             }
             debug = configuration.getBoolean("debug")
             deleteAfterGrant = configuration.getBoolean("deleteAfterGrant")
+            loopRegister = configuration.getBoolean("loopRegister")
+            loopRegisterInterval = configuration.getLong("loopRegisterInterval")
         } catch (e: Exception) {
             e.printStackTrace()
             logger.warning("[UltimateInventoryShop]Config file is not correct!")

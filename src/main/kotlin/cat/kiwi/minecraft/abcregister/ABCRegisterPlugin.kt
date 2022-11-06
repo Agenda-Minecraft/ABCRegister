@@ -1,6 +1,8 @@
 package cat.kiwi.minecraft.abcregister
 
 import cat.kiwi.minecraft.abcregister.config.Config
+import cat.kiwi.minecraft.abcregister.model.ServerStatus
+import cat.kiwi.minecraft.abcregister.service.LoopRegisterTask
 import cat.kiwi.minecraft.abcregister.service.WatchTask
 import com.google.gson.Gson
 import io.etcd.jetcd.ByteSequence
@@ -11,6 +13,7 @@ import net.md_5.bungee.api.plugin.Plugin
 class ABCRegisterPlugin : Plugin() {
     companion object {
         lateinit var instance: ABCRegisterPlugin
+        lateinit var client: Client
     }
 
     override fun onEnable() {
@@ -20,10 +23,10 @@ class ABCRegisterPlugin : Plugin() {
         Config.readConfig()
 
         // create jetcd client
-        val client = Client.builder().endpoints(Config.etcdEndpoints).build()
+        client = Client.builder().endpoints(Config.etcdEndpoints).build()
 
         logger.info("ABCRegisterPlugin enabled")
-        // run task async
+        // run watcher async
         proxy.scheduler.runAsync(this) {
             // watch client
             client.watchClient.watch(
@@ -31,6 +34,18 @@ class ABCRegisterPlugin : Plugin() {
                 WatchOption.newBuilder().isPrefix(true).build(),
                 WatchTask::appendHandler
             )
+        }
+
+        // run loop register async
+        proxy.scheduler.runAsync(this) {
+            while (Config.loopRegister) {
+                try {
+                    LoopRegisterTask.loopHandler()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                Thread.sleep(Config.loopRegisterInterval)
+            }
         }
     }
 }

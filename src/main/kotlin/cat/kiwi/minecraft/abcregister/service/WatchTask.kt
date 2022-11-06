@@ -2,6 +2,8 @@ package cat.kiwi.minecraft.abcregister.service
 
 import cat.kiwi.minecraft.abcregister.config.Config
 import cat.kiwi.minecraft.abcregister.model.ServerStatus
+import cat.kiwi.minecraft.abcregister.model.inetAddress
+import cat.kiwi.minecraft.abcregister.model.serverName
 import cat.kiwi.minecraft.abcregister.utils.Logger
 import com.google.gson.Gson
 import io.etcd.jetcd.watch.WatchResponse
@@ -19,8 +21,8 @@ object WatchTask {
             Logger.debug("type: $type, key: ${kv.key.toString(Charsets.UTF_8)}, value: ${kv.value.toString(Charsets.UTF_8)}")
             if (type == PUT) {
                 val serverStatus = gson.fromJson(kv.value.toString(Charsets.UTF_8), ServerStatus::class.java)
-                val serverName = serverStatus.address.replace(".", "-") + "-${serverStatus.port}"
-                val isAddress = InetSocketAddress(serverStatus.address, serverStatus.port)
+                val serverName = serverStatus.serverName
+                val isAddress = serverStatus.inetAddress
                 val motd = serverStatus.uuid
                 val serverInfo = ProxyServer.getInstance().constructServerInfo(serverName, isAddress, motd, false)
                 ProxyServer.getInstance().servers[serverName] = serverInfo

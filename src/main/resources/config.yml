@@ -3,3 +3,5 @@ etcd:
     - http://127.0.0.1:2379
 deleteAfterGrant: false
 debug: true
+loopRegister: true
+loopRegisterInterval: 60000
