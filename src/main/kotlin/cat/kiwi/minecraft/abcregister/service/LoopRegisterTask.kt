@@ -2,10 +2,10 @@ package cat.kiwi.minecraft.abcregister.service
 
 import cat.kiwi.minecraft.abcregister.ABCRegisterPlugin
 import cat.kiwi.minecraft.abcregister.config.Config
-import cat.kiwi.minecraft.abcregister.model.ServerStatus
-import cat.kiwi.minecraft.abcregister.model.inetAddress
-import cat.kiwi.minecraft.abcregister.model.serverName
 import cat.kiwi.minecraft.abcregister.utils.Logger
+import cat.kiwi.minecraft.metcd.model.ServerStatus
+import cat.kiwi.minecraft.metcd.model.inetAddress
+import cat.kiwi.minecraft.metcd.model.serverName
 import com.google.gson.Gson
 import io.etcd.jetcd.ByteSequence
 import io.etcd.jetcd.options.GetOption

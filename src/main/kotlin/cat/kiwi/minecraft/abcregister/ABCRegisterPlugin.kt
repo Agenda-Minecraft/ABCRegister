@@ -1,7 +1,6 @@
 package cat.kiwi.minecraft.abcregister
 
 import cat.kiwi.minecraft.abcregister.config.Config
-import cat.kiwi.minecraft.abcregister.model.ServerStatus
 import cat.kiwi.minecraft.abcregister.service.LoopRegisterTask
 import cat.kiwi.minecraft.abcregister.service.WatchTask
 import com.google.gson.Gson

@@ -31,6 +31,7 @@ dependencies {
     implementation("io.etcd:jetcd-core:0.7.3")
     // minecraft apis
     implementation("net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT")
+    implementation("com.github.Agenda-Minecraft:MEtcd:2.0.7")
 
     // other
     implementation("com.google.code.gson:gson:2.10")
